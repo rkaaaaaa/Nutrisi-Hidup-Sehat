@@ -1,4 +1,5 @@
 import streamlit as st
+import importlib
 
 st.set_page_config(
     page_title="Analisis Makanan yang Bernutrisi untuk Hidup Sehat",
@@ -10,6 +11,9 @@ st.set_page_config(
 # Sidebar
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Select Page", ["Home", "Data", "Visualization", "Machine Learning", "Contact"])
+if page == "Data":
+    Data = importlib.import_module("niken")
+    Data.show_niken()
 
 # Home Page
 if page == "Home":
