@@ -1,3 +1,4 @@
 import streamlit as st
 
-st.write("Hello, World!")
+def show_niken():
+    st.write("Hello, World!")
