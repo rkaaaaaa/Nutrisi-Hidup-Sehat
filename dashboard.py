@@ -1,11 +1,4 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.impute import SimpleImputer  
 
 st.set_page_config(
     page_title="Analisis Makanan yang Bernutrisi untuk Hidup Sehat",
@@ -24,4 +17,12 @@ if page == "Home":
     st.image("header.jpg", caption="Makanan Bernutrisi", use_container_width=True)  
     st.markdown("Selamat datang di Aplikasi Web Kelompok Data Analysis Makanan Bernutrisi! Explore and discover insights about Nutrition Food.")
 
-#dashboard kami
+    # poster gambar
+    st.header("Nutrisi Diet")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image("food.jpeg", caption="Gambar 1") 
+    with col2:
+        st.image("food2.jpeg", caption="Gambar 2") 
+    with col3:
+        st.image("food3.jpeg", caption="Gambar 3") 
