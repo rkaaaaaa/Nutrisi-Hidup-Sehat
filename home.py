@@ -15,7 +15,7 @@ def show_home():
                 }
                 .subtitle {
                     color: #34495E;
-                    text-align: center;
+                    text-align: center;2q   
                     font-size: 1.2rem;
                     margin-bottom: 30px;
                 }
