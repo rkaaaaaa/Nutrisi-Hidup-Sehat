@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
+import plotly.express as px
 
 # Define column names manually (now 24 columns)
 column_names = [
@@ -56,7 +57,7 @@ st.title("Food and Nutrition Data Visualization")
 # Select chart type
 chart_type = st.selectbox(
     "Select Chart Type",
-    ["Scatter Plot", "Calorie Target vs Protein", "Sodium vs Calories", "Word Cloud", "Bar Chart"],
+    ["Scatter Plot", "Calorie Target vs Protein", "Sodium vs Calories", "Word Cloud", "Bar Chart", "3D Scatter Plot"],
 )
 
 if chart_type == "Scatter Plot":
@@ -152,3 +153,14 @@ elif chart_type == "Bar Chart":
     plt.ylabel("Count")
     plt.xticks(rotation=45)
     st.pyplot(plt)
+
+elif chart_type == "3D Scatter Plot":
+    st.header("3D Scatter Plot")
+    # Filter numeric columns for selection
+    numeric_columns = df.select_dtypes(include=['number']).columns
+    x_axis = st.selectbox("Select X-axis", numeric_columns)
+    y_axis = st.selectbox("Select Y-axis", numeric_columns)
+    z_axis = st.selectbox("Select Z-axis", numeric_columns)
+
+    fig = px.scatter_3d(df, x=x_axis, y=y_axis, z=z_axis)
+    st.plotly_chart(fig)
