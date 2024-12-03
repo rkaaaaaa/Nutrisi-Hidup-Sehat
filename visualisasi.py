@@ -1,167 +1,88 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud, STOPWORDS
-import plotly.express as px
+from wordcloud import WordCloud
 
-# Define column names manually (now 24 columns)
 def show_visualisasi():
-    column_names = [
-        "Ages",
-        "Gender",
-        "Height",
-        "Weight",
-        "Activity Level",
-        "Dietary Preference",
-        "Daily Calorie Target",
-        "Protein",
-        "Sugar",
-        "Sodium",
-        "Calories",
-        "Carbohydrates",
-        "Fiber",
-        "Fat",
-        "Breakfast Suggestion",
-        "Lunch Suggestion",
-        "Dinner Suggestion",
-        "Snack Suggestion",
-        "Disease",
-        "Column 20",
-        "Column 21",
-        "Column 22",
-        "Column 23",
-        "Column 24",
-    ]
+    # Memuat file CSV langsung
+    DATA_PATH = "Food_Nutrition.csv"
 
-    # Load the CSV file (using readlines to handle the lack of header)
-    with open("Food_Nutrition.csv", "r") as f:
-        lines = f.readlines()
+    # Pastikan delimiter sesuai dengan file Anda
+    try:
+        df = pd.read_csv(DATA_PATH, delimiter=',', encoding='utf-8')
+    except pd.errors.ParserError:
+        # Jika gagal, coba delimiter lain
+        df = pd.read_csv(DATA_PATH, delimiter=';', encoding='utf-8')
 
-    # Create a list of lists to store the data
-    data = []
-    for line in lines:
-        row = line.strip().split(",")
-        data.append(row)
+    # Judul Aplikasi
+    # st.title("Visualisasi Data Nutrisi")
+    st.markdown("<h1 style='text-align: center; color: #4CAF50;'>Visualisasi Data Nutrisi</h1>", unsafe_allow_html=True)
 
-    # Create a pandas DataFrame from the data
-    df = pd.DataFrame(data, columns=column_names)
-
-    # Convert relevant columns to numeric
-    df["Daily Calorie Target"] = pd.to_numeric(df["Daily Calorie Target"], errors='coerce')
-    df["Protein"] = pd.to_numeric(df["Protein"], errors='coerce')
-    df["Sodium"] = pd.to_numeric(df["Sodium"], errors='coerce')
-    df["Calories"] = pd.to_numeric(df["Calories"], errors='coerce')
-
-    # Visualization Page
-    st.title("Food and Nutrition Data Visualization")
-
-    # Select chart type
-    chart_type = st.selectbox(
-        "Select Chart Type",
-        ["Scatter Plot", "Calorie Target vs Protein", "Sodium vs Calories", "Word Cloud", "Bar Chart", "3D Scatter Plot"],
+    # Dropdown untuk memilih visualisasi
+    visualization_option = st.selectbox(
+        "Pilih Visualisasi",
+        ["Pilih", "Distribusi Usia", "Hubungan Berat dan Tinggi Badan", "Scatter Plot Interaktif", "Word Cloud"]
     )
 
-    if chart_type == "Scatter Plot":
-        st.header("Scatter Plot")
-        # Filter numeric columns for selection
-        numeric_columns = df.select_dtypes(include=['number']).columns
-        x_axis = st.selectbox("Select X-axis", numeric_columns)
-        y_axis = st.selectbox("Select Y-axis", numeric_columns)
+    # Visualisasi berdasarkan pilihan
+    if visualization_option == "Distribusi Usia":
+        st.subheader("Histogram Distribusi Usia")
+        fig, ax = plt.subplots(figsize=(12, 8))
+        ax.hist(df['Ages'], bins=10, color='skyblue', edgecolor='black', alpha=0.7)
+        ax.set_xlabel('Usia', fontsize=14)
+        ax.set_ylabel('Jumlah', fontsize=14)
+        ax.set_title('Distribusi Usia', fontsize=16, fontweight='bold')
+        ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
+        st.pyplot(fig)
 
-        fig, ax = plt.subplots()
-        # Convert to float for plotting, handling potential errors
-        try:
-            # Check if columns are selected before accessing them
-            if x_axis is not None and y_axis is not None:
-                ax.scatter(df[x_axis], df[y_axis])  # No need to convert to float again
-                ax.set_xlabel(x_axis)
-                ax.set_ylabel(y_axis)
-                ax.set_title("Data Visualization")
-                st.pyplot(fig)
-            else:
-                st.warning("Please select both X-axis and Y-axis columns.")
-        except ValueError:
-            st.error(
-                f"Error: Cannot plot '{x_axis}' vs '{y_axis}'. Ensure both columns contain numeric data."
-            )
-
-    elif chart_type == "Calorie Target vs Protein":
-        st.header("Calorie Target vs Protein")
-        fig, ax = plt.subplots()
-        # Convert to float for plotting, handling potential errors
-        try:
-            ax.scatter(df["Daily Calorie Target"], df["Protein"])  # No need to convert to float again
-        except ValueError:
-            st.error(
-                "Error: Cannot plot 'Daily Calorie Target' vs 'Protein'. Ensure both columns contain numeric data."
-            )
-        else:  # Only plot if conversion is successful
-            ax.set_xlabel("Daily Calorie Target")
-            ax.set_ylabel("Protein")
-            ax.set_title("Calorie Target vs Protein")
-            st.pyplot(fig)
-
-    elif chart_type == "Sodium vs Calories":
-        st.header("Sodium vs Calories")
-        fig, ax = plt.subplots()
-        # Convert to float for plotting, handling potential errors
-        try:
-            ax.scatter(df["Sodium"], df["Calories"])  # No need to convert to float again
-        except ValueError:
-            st.error(
-                "Error: Cannot plot 'Sodium' vs 'Calories'. Ensure both columns contain numeric data."
-            )
-        else:  # Only plot if conversion is successful
-            ax.set_xlabel("Sodium")
-            ax.set_ylabel("Calories")
-            ax.set_title("Sodium vs Calories")
-            st.pyplot(fig)
-
-    elif chart_type == "Word Cloud":
-        st.header("Word Cloud")
-        # Combine text from relevant columns
-        text = " ".join(
-            df["Breakfast Suggestion"].astype(str)
-            + " "
-            + df["Lunch Suggestion"].astype(str)
-            + " "
-            + df["Dinner Suggestion"].astype(str)
-            + " "
-            + df["Snack Suggestion"].astype(str)
+    elif visualization_option == "Hubungan Berat dan Tinggi Badan":
+        st.subheader("Scatter Plot Berat vs Tinggi Badan")
+        fig, ax = plt.subplots(figsize=(12, 8))
+        scatter = ax.scatter(
+            df['Weight'], df['Height'],
+            c=df['Daily Calorie Target'], cmap='viridis', alpha=0.7, edgecolor='k'
         )
+        ax.set_xlabel('Berat Badan (kg)', fontsize=14)
+        ax.set_ylabel('Tinggi Badan (cm)', fontsize=14)
+        ax.set_title('Hubungan Berat Badan dan Tinggi Badan', fontsize=16, fontweight='bold')
+        ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
+        
+        # Tambahkan colorbar
+        cbar = plt.colorbar(scatter, ax=ax)
+        cbar.set_label('Target Kalori Harian', fontsize=12)
+        st.pyplot(fig)
 
-        # Create and display the word cloud
-        stopwords = set(STOPWORDS)
-        wordcloud = WordCloud(
-            width=800, height=400, background_color="white", stopwords=stopwords
-        ).generate(text)
-        plt.figure(figsize=(8, 8), facecolor=None)
-        plt.imshow(wordcloud)
-        plt.axis("off")
-        plt.tight_layout(pad=0)
-        st.pyplot(plt)
+    elif visualization_option == "Scatter Plot Interaktif":
+        st.subheader("Scatter Plot Interaktif")
+        
+        # Dropdown untuk memilih sumbu X dan Y
+        x_axis = st.selectbox("Pilih Kolom untuk Sumbu X:", df.columns)
+        y_axis = st.selectbox("Pilih Kolom untuk Sumbu Y:", df.columns)
+        
+        if st.button("Tampilkan Scatter Plot"):
+            fig, ax = plt.subplots(figsize=(12, 8))
+            scatter = ax.scatter(
+                df[x_axis], df[y_axis], 
+                alpha=0.7, edgecolor='k', color='purple'
+            )
+            ax.set_xlabel(x_axis, fontsize=14)
+            ax.set_ylabel(y_axis, fontsize=14)
+            ax.set_title(f"Scatter Plot {y_axis} vs {x_axis}", fontsize=16, fontweight='bold')
+            ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
+            st.pyplot(fig)
 
-    elif chart_type == "Bar Chart":
-        st.header("Bar Chart")
-        column_to_count = st.selectbox("Select Column for Bar Chart", df.columns)
-
-        counts = df[column_to_count].value_counts()
-
-        plt.figure(figsize=(10, 6))
-        counts.plot(kind="bar")
-        plt.title(f"{column_to_count} Distribution")
-        plt.xlabel(column_to_count)
-        plt.ylabel("Count")
-        plt.xticks(rotation=45)
-        st.pyplot(plt)
-
-    elif chart_type == "3D Scatter Plot":
-        st.header("3D Scatter Plot")
-        # Filter numeric columns for selection
-        numeric_columns = df.select_dtypes(include=['number']).columns
-        x_axis = st.selectbox("Select X-axis", numeric_columns)
-        y_axis = st.selectbox("Select Y-axis", numeric_columns)
-        z_axis = st.selectbox("Select Z-axis", numeric_columns)
-
-        fig = px.scatter_3d(df, x=x_axis, y=y_axis, z=z_axis)
-        st.plotly_chart(fig)
+    elif visualization_option == "Word Cloud":
+        st.subheader("Word Cloud dari Preferensi Diet")
+        
+        # Menggabungkan semua teks dari kolom Dietary Preference
+        text = " ".join(df["Dietary Preference"].dropna().astype(str))
+        
+        # Membuat Word Cloud
+        wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+        
+        # Menampilkan Word Cloud
+        fig, ax = plt.subplots(figsize=(12, 8))
+        ax.imshow(wordcloud, interpolation='bilinear')
+        ax.axis("off")
+        ax.set_title("Word Cloud: Preferensi Diet", fontsize=16, fontweight='bold')
+        st.pyplot(fig)

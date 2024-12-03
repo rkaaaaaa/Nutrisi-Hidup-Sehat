@@ -14,6 +14,9 @@ page = st.sidebar.selectbox("Select Page", ["Home", "Data", "Visualization", "Ma
 if page == "Home":
     Home = importlib.import_module("home")
     Home.show_home()
+if page == "Data":
+    Data = importlib.import_module("data")
+    Data.show_data()
 if page == "Visualization":
     Visualization = importlib.import_module("visualisasi")
     Visualization.show_visualisasi()
