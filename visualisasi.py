@@ -15,7 +15,8 @@ def show_visualisasi():
         df = pd.read_csv(DATA_PATH, delimiter=';', encoding='utf-8')
 
     # Judul Aplikasi
-    st.title("Visualisasi Data Nutrisi")
+    # st.title("Visualisasi Data Nutrisi")
+    st.markdown("<h1 style='text-align: center; color: #4CAF50;'>Visualisasi Data Nutrisi</h1>", unsafe_allow_html=True)
 
     # Dropdown untuk memilih visualisasi
     visualization_option = st.selectbox(
