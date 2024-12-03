@@ -34,7 +34,7 @@ def show_visualisasi():
     ]
 
     # Load the CSV file (using readlines to handle the lack of header)
-    with open("Food_and_Nutrition__.csv", "r") as f:
+    with open("Food_Nutrition.csv", "r") as f:
         lines = f.readlines()
 
     # Create a list of lists to store the data
