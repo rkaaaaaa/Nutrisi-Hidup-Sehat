@@ -7,7 +7,7 @@ def show_home():
                 .title {
                     color: #1ABC9C;
                     text-align: center;
-                    font-size: 3rem;
+                    font-size: 3.5rem;
                     font-weight: bold;
                     background: linear-gradient(to right, #FF6B6B, #4ECDC4);
                     -webkit-background-clip: text;
@@ -15,7 +15,7 @@ def show_home():
                 }
                 .subtitle {
                     color: #34495E;
-                    text-align: center;2q   
+                    text-align: center;
                     font-size: 1.2rem;
                     margin-bottom: 30px;
                 }
@@ -31,7 +31,7 @@ def show_home():
     """, unsafe_allow_html=True)
     
     st.markdown('<div class="title">Smart Nutrition</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">Explore and Discover Insights About Nutritional Foods</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subtitle">Aplikasi Prediksi Kesehatan dengan Data Gizi</div>', unsafe_allow_html=True)
     st.image("images/header.jpg", caption="Makanan Bernutrisi", use_container_width=True)  
                 
     st.markdown("""
@@ -53,7 +53,7 @@ def show_home():
         "Air lemon di pagi hari membantu detoksifikasi tubuh.",
         "Kandungan omega-3 pada ikan sangat baik untuk otak dan jantung."
     ]
-    st.markdown(f'<div class="fact">{random.choice(fakta)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="fact"> 💡FYI : {random.choice(fakta)}</div>', unsafe_allow_html=True)
 
     st.header("Galeri Nutrisi Diet")
     col1, col2, col3 = st.columns(3)
