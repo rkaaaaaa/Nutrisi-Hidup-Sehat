@@ -23,3 +23,6 @@ if page == "About":
 if page == "Contact":
     Contact = importlib.import_module("contact")
     Contact.show_contact()
+if page == "Machine Learning":
+    MachineLearning = importlib.import_module("MachineLearning")
+    MachineLearning.show_machine()
