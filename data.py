@@ -2,10 +2,9 @@ import streamlit as st
 import pandas as pd
 
 def show_data():
-    
     st.title("Eksplorasi Dataset Nutrisi Makanan")
     
-    file_path = "Food_Nutrition.csv"
+file_path = "Food_Nutrition.csv"
     
 try:
     # Membaca file dengan penanganan otomatis untuk pemisah dan baris buruk
