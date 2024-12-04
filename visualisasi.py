@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
+
 def show_visualisasi():
     # Memuat file CSV langsung
     DATA_PATH = "Food_Nutrition.csv"
@@ -34,6 +35,10 @@ def show_visualisasi():
         ax.set_title('Distribusi Usia', fontsize=16, fontweight='bold')
         ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
         st.pyplot(fig)
+        st.markdown("""
+            **Penjelasan:** Histogram ini menunjukkan distribusi usia dari data. Sumbu X menunjukkan rentang usia, sedangkan sumbu Y menunjukkan jumlah orang dalam setiap rentang usia. 
+            Dari histogram, kita dapat melihat bahwa kelompok usia terbanyak berada di rentang 25-35 tahun, diikuti oleh rentang 55-65 tahun. Kelompok usia paling sedikit berada di rentang 75-85 tahun. 
+        """)
 
     elif visualization_option == "Hubungan Berat dan Tinggi Badan":
         st.subheader("Scatter Plot Berat vs Tinggi Badan")
@@ -51,6 +56,12 @@ def show_visualisasi():
         cbar = plt.colorbar(scatter, ax=ax)
         cbar.set_label('Target Kalori Harian', fontsize=12)
         st.pyplot(fig)
+        st.markdown("""
+            **Penjelasan:** Scatter plot ini menunjukkan hubungan antara berat badan dan tinggi badan. Sumbu X menunjukkan berat badan dalam kilogram (kg), sedangkan sumbu Y menunjukkan tinggi badan dalam sentimeter (cm). 
+            Warna setiap titik pada scatter plot menunjukkan target kalori harian. 
+            Dari scatter plot, kita dapat melihat bahwa tidak ada hubungan yang jelas antara berat badan dan tinggi badan. Terdapat titik-titik yang tersebar di seluruh scatter plot, menunjukkan bahwa orang dengan berat badan yang berbeda dapat memiliki tinggi badan yang berbeda pula. 
+            Warna titik menunjukkan bahwa target kalori harian tidak selalu berkorelasi dengan berat badan atau tinggi badan.
+        """)
 
     elif visualization_option == "Scatter Plot Interaktif":
         st.subheader("Scatter Plot Interaktif")
@@ -86,3 +97,4 @@ def show_visualisasi():
         ax.axis("off")
         ax.set_title("Word Cloud: Preferensi Diet", fontsize=16, fontweight='bold')
         st.pyplot(fig)
+        
