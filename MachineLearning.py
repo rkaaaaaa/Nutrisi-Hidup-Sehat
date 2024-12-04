@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 
 def show_machine():
-# Memuat dataset
+    # Memuat dataset
     data = pd.read_csv('Food_and_Nutrition__.csv')
 
     # Menyimpan label asli
@@ -40,7 +40,7 @@ def show_machine():
     scores = cross_val_score(model, X, y, cv=5)
 
     # Antarmuka pengguna Streamlit untuk input
-    st.title("Prediksi Penyakit Berdasarkan Data Kesehatan")
+    st.markdown("<h1 style='text-align: center; color: white;'>Prediksi Penyakit Berdasarkan Data Kesehatan</h1>", unsafe_allow_html=True)
 
     # Menggunakan st.form untuk mengelompokkan input
     with st.form(key='input_form'):
