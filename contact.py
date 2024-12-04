@@ -1,100 +1,50 @@
 import streamlit as st
 import webbrowser
 
-# CSS untuk meningkatkan tampilan
-st.markdown(
-    """
-    <style>
-        .stApp {
-            background: linear-gradient(135deg, #283c86, #45a247); /* Gradasi warna */
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .header {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .sub-header {
-            font-size: 1.8rem;
-            margin-top: 40px;
-        }
-        .content-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
-        }
-        .feedback-container {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        .card-box {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-        }
-        a {
-            color: #4cffff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        button {
-            background-color: #4cffff;
-            color: black;
-            font-weight: bold;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #39cccc;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+# Memuat Bootstrap Icons melalui CDN
+st.markdown("""
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+""", unsafe_allow_html=True)
 
-# Fungsi utama
+# Fungsi utama untuk bagian Contact
 def show_contact():
-    # Header utama
-    st.markdown("<div class='header'>Contact and About</div>", unsafe_allow_html=True)
+    # Header utama dengan ikon Bootstrap
+    st.markdown("""
+    <h1 style='text-align: center; color: white;'>
+        <i class="bi bi-person-circle" style="font-size: 3rem;"></i> Contact
+    </h1>
+    """, unsafe_allow_html=True)
 
     # Membuat layout dua kolom untuk Anggota Kelompok dan Contact Information
-    cols = st.columns(2)  # Membagi menjadi 2 kolom
+    st.markdown("<h2 style='color: #4CAF50;'>🎯 Anggota Kelompok 5</h2>", unsafe_allow_html=True)
     
-    # Kotak untuk Anggota Kelompok di kolom pertama
-    with cols[0]:
-        st.markdown("<div class='card-box'>", unsafe_allow_html=True)
-        st.markdown("<h2 class='sub-header'>Anggota Kelompok 5</h2>", unsafe_allow_html=True)
-        st.write("1. Bintang Raka Putra (233307097)")
-        st.write("2. Hadziq Naufal Bagus (233307101)")
-        st.write("3. Leni Novitasari (233307106)")
-        st.write("4. Niken Setyo Ningrum (233307111)")
-        st.markdown("</div>", unsafe_allow_html=True)
+    # Kotak Anggota Kelompok
+    with st.expander("Anggota Kelompok 5", expanded=True):
+        st.markdown("""
+            1. Bintang Raka Putra (233307097)<br>
+            2. Hadziq Naufal Bagus (233307101)<br>
+            3. Leni Novitasari (233307106)<br>
+            4. Niken Setyo Ningrum (233307111)<br>
+        """, unsafe_allow_html=True)
 
-    # Kotak untuk Contact Information di kolom kedua
-    with cols[1]:
-        st.markdown("<div class='card-box'>", unsafe_allow_html=True)
-        st.markdown("<h2 class='sub-header'>Contact Information</h2>", unsafe_allow_html=True)
-        st.write("**Email:** -")
-        st.write("**GitHub:** [Link GitHub](https://github.com/rkaaaaaa/Nutrisi-Hidup-Sehat.git)")
-        st.write("**Instagram:** -")
-        st.write("**Nomor Admin:** +6281234567890")  # Tambahkan nomor admin
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #4CAF50;'>📞 Contact Information</h2>", unsafe_allow_html=True)
+    
+    # Kotak Contact Information
+    with st.expander("Contact Information", expanded=True):
+        st.markdown("""
+            **Email:** -<br>
+            **GitHub:** [Link GitHub](https://github.com/rkaaaaaa/Nutrisi-Hidup-Sehat.git)<br>
+            **Instagram:** -<br>
+            **Nomor Admin:** +6281234567890<br>
+        """, unsafe_allow_html=True)
 
     # Feedback pengguna
-    st.markdown("<div class='feedback-container'>", unsafe_allow_html=True)
-    st.markdown("<h2 class='sub-header'>Feedback</h2>", unsafe_allow_html=True)
-    st.write("Seberapa suka Anda dengan aplikasi ini?")
+    st.markdown("<h2 style='color: #4CAF50;'>💬 Feedback</h2>", unsafe_allow_html=True)
+    st.markdown("""
+        Kami sangat menghargai masukan Anda! Berikan komentar atau saran Anda untuk perbaikan aplikasi ini.
+    """, unsafe_allow_html=True)
 
     # Slider rating
     rating = st.slider("Geser untuk memberi rating", 0, 100, 50, key="feedback_slider")
@@ -107,7 +57,7 @@ def show_contact():
     )
 
     # Input nomor WhatsApp
-    phone_number = st.text_input("Masukkan nomor WhatsApp tujuan (contoh: 6281234567890):", "")
+    phone_number = st.text_input("Masukkan nomor WhatsApp admin", "")
 
     # Tombol submit
     if st.button("Submit", key="feedback_submit"):
@@ -118,9 +68,11 @@ def show_contact():
             st.error("Masukan feedback tidak boleh kosong.")
         else:
             # Format URL WhatsApp
-            whatsapp_url = f"https://wa.me/{phone_number}?text={feedback}"
+            whatsapp_url = f"https://wa.me/{6285607053282}?text={feedback}"
             # Buka di browser
             webbrowser.open(whatsapp_url)
             st.success("Feedback Anda telah terkirim ke WhatsApp!")
             st.balloons()  # Animasi interaktif untuk pengguna
-    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Footer
+    st.markdown("<p style='text-align: center; color: #888888;'>© 2024 Asisten Nutrisi. All Rights Reserved.</p>", unsafe_allow_html=True)
