@@ -1,5 +1,4 @@
 import streamlit as st
-import webbrowser
 import urllib.parse
 
 # Memuat Bootstrap Icons melalui CDN
@@ -71,8 +70,9 @@ def show_contact():
             message = f"Hello Admin,%0A%0ASaya ingin memberikan feedback:%0A{urllib.parse.quote(feedback)}%0A%0ARating: {rating}/100"
             # Format URL WhatsApp
             whatsapp_url = f"https://wa.me/{phone_number}?text={message}"
-            # Buka di browser
-            webbrowser.open(whatsapp_url)
+            
+            # Menggunakan st.markdown dengan HTML untuk membuka WhatsApp di tab baru
+            st.markdown(f'<a href="{whatsapp_url}" target="_blank" class="btn btn-primary">Kirim Feedback ke WhatsApp</a>', unsafe_allow_html=True)
             st.success("Feedback Anda telah terkirim ke WhatsApp!")
             st.balloons()  # Animasi interaktif untuk pengguna
 
