@@ -3,7 +3,6 @@ import pandas as pd
 
 st.title("Eksplorasi Dataset Nutrisi Makanan")
 
-# Path ke file dataset
 file_path = "Food_Nutrition.csv"
 
 try:
