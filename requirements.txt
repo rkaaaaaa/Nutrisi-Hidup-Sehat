@@ -4,3 +4,4 @@ matplotlib
 scikit-learn
 wordcloud
 numpy
+streamlit-option-menu
