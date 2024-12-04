@@ -1,5 +1,6 @@
 import streamlit as st
 import webbrowser
+import urllib.parse
 
 # Memuat Bootstrap Icons melalui CDN
 st.markdown("""
@@ -34,10 +35,9 @@ def show_contact():
     # Kotak Contact Information
     with st.expander("Contact Information", expanded=True):
         st.markdown("""
-            **Email:** -<br>
+            **Email:** kelasdteknologiinformasi@gmail.com<br>
             **GitHub:** [Link GitHub](https://github.com/rkaaaaaa/Nutrisi-Hidup-Sehat.git)<br>
-            **Instagram:** -<br>
-            **Nomor Admin:** +6281234567890<br>
+            **Instagram:** @inftechd<br>
         """, unsafe_allow_html=True)
 
     # Feedback pengguna
@@ -57,7 +57,7 @@ def show_contact():
     )
 
     # Input nomor WhatsApp
-    phone_number = st.text_input("Masukkan nomor WhatsApp admin", "")
+    phone_number = st.text_input("Masukkan nomor WhatsApp admin | Bintang Raka - 6285607053282 / Hadziq Naufal - 62895343028010 /Leni Novitasari - 6285334645836 /Niken Setyo Ningrum - 62895710617373")
 
     # Tombol submit
     if st.button("Submit", key="feedback_submit"):
@@ -67,8 +67,10 @@ def show_contact():
         elif not feedback:
             st.error("Masukan feedback tidak boleh kosong.")
         else:
+            # Format pesan untuk WhatsApp
+            message = f"Hello Admin,%0A%0ASaya ingin memberikan feedback:%0A{urllib.parse.quote(feedback)}%0A%0ARating: {rating}/100"
             # Format URL WhatsApp
-            whatsapp_url = f"https://wa.me/{6285607053282}?text={feedback}"
+            whatsapp_url = f"https://wa.me/{phone_number}?text={message}"
             # Buka di browser
             webbrowser.open(whatsapp_url)
             st.success("Feedback Anda telah terkirim ke WhatsApp!")

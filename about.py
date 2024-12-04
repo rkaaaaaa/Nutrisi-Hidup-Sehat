@@ -18,19 +18,34 @@ def show_about():
     with st.expander("✨ Fitur Utama", expanded=True):
         st.markdown("""
             - **Rencana Diet Pribadi**  
-            Memberikan rekomendasi makanan berdasarkan kondisi kesehatan seperti diabetes, hipertensi, atau penyakit kardiovaskular.  
-            Menyediakan opsi makanan seimbang yang sesuai dengan pembatasan diet seperti rendah karbohidrat, rendah lemak, atau tinggi protein.
+              Memberikan rekomendasi makanan berdasarkan kondisi kesehatan seperti diabetes, hipertensi, atau penyakit kardiovaskular.  
+              Menyediakan opsi makanan seimbang yang sesuai dengan pembatasan diet seperti rendah karbohidrat, rendah lemak, atau tinggi protein.
 
             - **Wawasan Nutrisi**  
-            Menampilkan informasi rinci tentang makronutrien (karbohidrat, protein, lemak) dan mikronutrien (vitamin dan mineral).  
-            Memberikan konten kalori dan ukuran porsi untuk setiap makanan, membantu pengguna mencapai tujuan diet mereka.
+              Menampilkan informasi rinci tentang makronutrien (karbohidrat, protein, lemak) dan mikronutrien (vitamin dan mineral).  
+              Memberikan konten kalori dan ukuran porsi untuk setiap makanan, membantu pengguna mencapai tujuan diet mereka.
 
             - **Rekomendasi Berdasarkan Penyakit**  
-            Menghubungkan makanan dengan penyakit tertentu untuk membantu mengelola atau mengurangi gejala secara efektif.  
-            Memberikan wawasan tentang pola makan umum untuk kondisi kesehatan tertentu untuk mendorong pilihan makanan yang lebih baik.
+              Menghubungkan makanan dengan penyakit tertentu untuk membantu mengelola atau mengurangi gejala secara efektif.  
+              Memberikan wawasan tentang pola makan umum untuk kondisi kesehatan tertentu untuk mendorong pilihan makanan yang lebih baik.
 
             - **Klasifikasi Makanan**  
-            Mengkategorikan makanan berdasarkan jenis (sarapan, makan siang, makan malam, camilan) untuk memudahkan perencanaan makan sepanjang hari.
+              Mengkategorikan makanan berdasarkan jenis (sarapan, makan siang, makan malam, camilan) untuk memudahkan perencanaan makan sepanjang hari.
+        """, unsafe_allow_html=True)
+
+    # Metode yang digunakan
+    with st.expander("📊 Metode yang Digunakan", expanded=True):
+        st.markdown("""
+        - **Algoritma yang Digunakan:** Random Forest Classifier  
+          - **Tipe Metode:**  
+            Supervised Learning: Random Forest digunakan untuk masalah klasifikasi dan regresi. Dalam aplikasi ini, algoritma digunakan untuk klasifikasi penyakit berdasarkan fitur kesehatan.  
+          - **Deskripsi:**  
+            Random Forest adalah ensemble learning method yang menggabungkan banyak decision trees untuk memberikan hasil yang lebih akurat dan stabil. Setiap tree dilatih pada subset acak dari data, dan prediksi akhir diambil berdasarkan voting dari semua tree.  
+          - **Langkah-langkah Implementasi:**  
+            1. **Pengolahan Data:** Data dibaca, kemudian fitur dan target dipisahkan.  
+            2. **Pembagian Data:** Data dibagi menjadi set pelatihan dan pengujian menggunakan `train_test_split`.  
+            3. **Pelatihan Model:** Model `RandomForestClassifier` dilatih dengan data pelatihan.  
+            4. **Evaluasi Model:** Model dievaluasi menggunakan cross-validation untuk mendapatkan skor akurasi.  
         """, unsafe_allow_html=True)
 
     # Pengguna target
@@ -44,7 +59,7 @@ def show_about():
         </ul>
         """, unsafe_allow_html=True)
 
-    # Deskripsi akhir
+    # Kesimpulan
     with st.expander("Kesimpulan", expanded=True):
         st.markdown("""
             Dengan fokus pada peningkatan kebiasaan makan dan mendukung pengelolaan kesehatan, aplikasi <strong>Asisten Nutrisi untuk Kesehatan Pribadi</strong> 
